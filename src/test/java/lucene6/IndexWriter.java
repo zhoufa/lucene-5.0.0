@@ -6,6 +6,6 @@ package lucene6;
  */
 public class IndexWriter {
     public static void main(String[] args) {
-        System.out.println();
+        System.out.println("test");
     }
 }
