@@ -23,25 +23,29 @@ import java.nio.file.attribute.BasicFileAttributes;
 public class IndexFile {
 
     public static void main(String[] args) throws IOException {
-        createIndex("E:\\study\\Lucene-writer\\writer.txt", "E:\\study\\Lucene-index");
+//        createIndex("E:\\study\\Lucene-writer", "E:\\solrhome\\Lucene-index");
 
-        readIndex("E:\\study\\Lucene-index");
+        readIndex("E:\\solrhome\\Lucene-index");
     }
 
     private static void readIndex(String indexPath) throws IOException {
         Directory dir = FSDirectory.open(Paths.get(indexPath));
         IndexReader reader = DirectoryReader.open(dir);
         IndexSearcher searcher = new IndexSearcher(reader);
-        PhraseQuery query = new PhraseQuery();
-        query.add(new Term("contents", "内容"));
-//        TopScoreDocCollector collector = TopScoreDocCollector.create(1);
-        TopDocs topDocs = searcher.search(query, 1);
+//        E:\study\Lucene-writer\write2.txt
+        Query query = new TermQuery (new Term("content", "DDD"));
+//        Query query = new TermQuery (new Term("path", "E:\\study\\Lucene-writer\\write2.txt"));
+        TopDocs topDocs = searcher.search(query, 3);
+        Integer hit = topDocs.totalHits;
+        System.out.println(">>>"+hit);
         ScoreDoc[] docs = topDocs.scoreDocs;
+
+
         System.out.println("文件个数："+docs.length);
         for (ScoreDoc doc : docs) {
             Document document = searcher.doc(doc.doc);
-            System.out.println("文档内容" + document.get("contents"));
-            System.out.println("文件路径" + document.get("path"));
+            System.out.println("文档内容：" + document.get("content"));
+            System.out.println("文件路径：" + document.get("path"));
         }
     }
 
@@ -85,27 +89,11 @@ public class IndexFile {
     private static void indexDocs(final IndexWriter writer, Path docDirPath) throws IOException {
         if (Files.isDirectory(docDirPath)) {
             System.out.println("directory");
-            Files.walkFileTree(docDirPath, new FileVisitor<Path>() {
-                @Override
-                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                    return null;
-                }
-
+            Files.walkFileTree(docDirPath, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-                    System.out.println(path.getFileName());
                     indexDoc(writer, path, attrs.lastModifiedTime().toMillis());
                     return FileVisitResult.CONTINUE;
-                }
-
-                @Override
-                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    return null;
                 }
             });
         } else {
@@ -129,21 +117,20 @@ public class IndexFile {
         InputStream stream = Files.newInputStream(file);
         Document doc = new Document();
 
-        Field pathField = new StringField("path", "我是地址", Field.Store.YES);
+        System.out.println(file.toString());
+        Field pathField = new StringField("path", file.toString(), Field.Store.YES);
         doc.add(pathField);
 
 //        doc.add(new LongField("modified", lastModified, Field.Store.YES));
-        doc.add(new TextField("contents", "我是内容",Field.Store.YES));
-//        doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
+        doc.add(new TextField("content",intputStream2String(stream).trim(), Field.Store.YES));
 
-        if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
-            System.out.println("adding " + file);
+//        if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
             writer.addDocument(doc);
-            writer.addDocuments(null);
-        } else {
-            System.out.println("updating " + file);
-            writer.updateDocument(new Term("path", file.toString()), doc);
-        }
+
+//        } else {
+//            System.out.println("updating " + file);
+//            writer.updateDocument(new Term("path", file.toString()), doc);
+//        }
         writer.commit();
     }
 
