@@ -23,7 +23,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 public class IndexFile {
 
     public static void main(String[] args) throws IOException {
-//        createIndex("E:\\study\\Lucene-writer\\writer.txt", "E:\\study\\Lucene-index");
+        createIndex("E:\\study\\Lucene-writer\\writer.txt", "E:\\study\\Lucene-index");
 
         readIndex("E:\\study\\Lucene-index");
     }
@@ -33,7 +33,7 @@ public class IndexFile {
         IndexReader reader = DirectoryReader.open(dir);
         IndexSearcher searcher = new IndexSearcher(reader);
         PhraseQuery query = new PhraseQuery();
-        query.add(new Term("contents", "中国"));
+        query.add(new Term("contents", "内容"));
 //        TopScoreDocCollector collector = TopScoreDocCollector.create(1);
         TopDocs topDocs = searcher.search(query, 1);
         ScoreDoc[] docs = topDocs.scoreDocs;
@@ -129,11 +129,11 @@ public class IndexFile {
         InputStream stream = Files.newInputStream(file);
         Document doc = new Document();
 
-        Field pathField = new StringField("path", file.toString(), Field.Store.YES);
+        Field pathField = new StringField("path", "我是地址", Field.Store.YES);
         doc.add(pathField);
 
-        doc.add(new LongField("modified", lastModified, Field.Store.YES));
-        doc.add(new TextField("contents",intputStream2String(stream),Field.Store.YES));
+//        doc.add(new LongField("modified", lastModified, Field.Store.YES));
+        doc.add(new TextField("contents", "我是内容",Field.Store.YES));
 //        doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
 
         if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
