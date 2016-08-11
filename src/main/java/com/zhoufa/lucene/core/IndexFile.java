@@ -1,5 +1,6 @@
 package com.zhoufa.lucene.core;
 
+import com.zhoufa.lucene.util.FileUtil;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.*;
@@ -7,6 +8,7 @@ import org.apache.lucene.index.*;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,11 +35,10 @@ public class IndexFile {
         IndexReader reader = DirectoryReader.open(dir);
         IndexSearcher searcher = new IndexSearcher(reader);
 //        E:\study\Lucene-writer\write2.txt
-        Query query = new TermQuery (new Term("content", "DDD"));
+        Query query = new TermQuery (new Term("content", "eee"));
 //        Query query = new TermQuery (new Term("path", "E:\\study\\Lucene-writer\\write2.txt"));
         TopDocs topDocs = searcher.search(query, 3);
         Integer hit = topDocs.totalHits;
-        System.out.println(">>>"+hit);
         ScoreDoc[] docs = topDocs.scoreDocs;
 
 
@@ -71,7 +72,7 @@ public class IndexFile {
         long start = System.currentTimeMillis();
         Directory dir = FSDirectory.open(Paths.get(indexPath));
         Path docDirPath = Paths.get(dirPath);
-        Analyzer analyzer = new StandardAnalyzer();
+        Analyzer analyzer = new IKAnalyzer();
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
 
         if (createOrAppend) {
@@ -122,7 +123,7 @@ public class IndexFile {
         doc.add(pathField);
 
 //        doc.add(new LongField("modified", lastModified, Field.Store.YES));
-        doc.add(new TextField("content",intputStream2String(stream).trim(), Field.Store.YES));
+        doc.add(new TextField("content", "中文测试", Field.Store.YES));
 
 //        if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
             writer.addDocument(doc);
