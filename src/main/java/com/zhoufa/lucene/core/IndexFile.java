@@ -33,17 +33,18 @@ public class IndexFile {
     private static void readIndex(String indexPath) throws IOException {
         Directory dir = FSDirectory.open(Paths.get(indexPath));
         IndexReader reader = DirectoryReader.open(dir);
-        IndexSearcher searcher = new IndexSearcher(reader);
+        IndexSearcher searcher = new SearcherFactory().newSearcher(reader);
 //        E:\study\Lucene-writer\write2.txt
-        Query query = new TermQuery (new Term("content", "eee"));
+        PhraseQuery query = new PhraseQuery();
+        query.add(new Term("content", "中文"), 1);
 //        Query query = new TermQuery (new Term("path", "E:\\study\\Lucene-writer\\write2.txt"));
         TopDocs topDocs = searcher.search(query, 3);
-        Integer hit = topDocs.totalHits;
-        ScoreDoc[] docs = topDocs.scoreDocs;
 
+        ScoreDoc[] docs = topDocs.scoreDocs;
 
         System.out.println("文件个数："+docs.length);
         for (ScoreDoc doc : docs) {
+            System.out.println("score: "+doc.score);
             Document document = searcher.doc(doc.doc);
             System.out.println("文档内容：" + document.get("content"));
             System.out.println("文件路径：" + document.get("path"));
