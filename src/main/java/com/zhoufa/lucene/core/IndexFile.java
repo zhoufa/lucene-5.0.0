@@ -1,9 +1,10 @@
 package com.zhoufa.lucene.core;
 
-import com.zhoufa.lucene.util.FileUtil;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.*;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
@@ -36,7 +37,9 @@ public class IndexFile {
         IndexSearcher searcher = new SearcherFactory().newSearcher(reader);
 //        E:\study\Lucene-writer\write2.txt
         PhraseQuery query = new PhraseQuery();
-        query.add(new Term("content", "中文"), 1);
+//        query.setBoost((float) 0.22);
+        query.add(new Term("content", "中国"));
+//        query.add(new Term("content", "eee"), 0);
 //        Query query = new TermQuery (new Term("path", "E:\\study\\Lucene-writer\\write2.txt"));
         TopDocs topDocs = searcher.search(query, 3);
 
@@ -124,7 +127,7 @@ public class IndexFile {
         doc.add(pathField);
 
 //        doc.add(new LongField("modified", lastModified, Field.Store.YES));
-        doc.add(new TextField("content", "中文测试", Field.Store.YES));
+        doc.add(new TextField("content", intputStream2String(stream), Field.Store.YES));
 
 //        if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
             writer.addDocument(doc);
