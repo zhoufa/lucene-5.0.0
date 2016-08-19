@@ -109,6 +109,21 @@ public class IndexingText extends TestCase{
         reader.close();
     }
 
+    //更新docment
+    public void testupdate() throws IOException {
+        assertEquals(1, getHitCount("city", "Amsterdam"));
+        IndexWriter writer = getWriter();
+
+        Document doc = new Document();
+        doc.add(new Field("id", "1", Field.Store.YES, Field.Index.ANALYZED));
+        doc.add(new Field("country", "Netherlands", Field.Store.YES, Field.Index.NO));
+        doc.add(new Field("contents", "Amsterdam has lots of bridges", Field.Store.NO, Field.Index.ANALYZED));
+        doc.add(new Field("city", "Haag", Field.Store.YES, Field.Index.ANALYZED));
+        writer.updateDocument(new Term("id", "1"), doc);
+        writer.close();
+        assertEquals(0, getHitCount("city", "Amsterdam"));
+    }
+
     public static void main(String[] args) throws Exception {
         IndexingText it = new IndexingText();
         it.setUp();

@@ -1,3 +1,4 @@
 # 只忽略idea目录，不忽略dbg文件
 idea/
 /.idea
+target/
