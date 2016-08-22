@@ -2,6 +2,7 @@ package com.zhoufa.lucene.core;
 
 import junit.framework.TestCase;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -12,6 +13,7 @@ import org.apache.lucene.store.RAMDirectory;
 import org.junit.Before;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author zhou.fa@diligentfirst.com
@@ -38,6 +40,7 @@ public class IndexingText extends TestCase{
             doc.add(new Field("country", unindexed[i], Field.Store.YES, Field.Index.NO));
             doc.add(new Field("contents", unstored[i], Field.Store.NO, Field.Index.ANALYZED));
             doc.add(new Field("city", text[i], Field.Store.YES, Field.Index.ANALYZED));
+            doc.add(new Field("date", DateTools.dateToString(new Date(), DateTools.Resolution.DAY), Field.Store.YES, Field.Index.NO));
             writer.addDocument(doc);
         }
         writer.close();
@@ -105,6 +108,7 @@ public class IndexingText extends TestCase{
             System.out.println("country：" + document.get("country"));
             System.out.println("contents：" + document.get("contents"));
             System.out.println("city：" + document.get("city"));
+            System.out.println("date：" + document.get("date"));
         }
         reader.close();
     }
@@ -119,9 +123,12 @@ public class IndexingText extends TestCase{
         doc.add(new Field("country", "Netherlands", Field.Store.YES, Field.Index.NO));
         doc.add(new Field("contents", "Amsterdam has lots of bridges", Field.Store.NO, Field.Index.ANALYZED));
         doc.add(new Field("city", "Haag", Field.Store.YES, Field.Index.ANALYZED));
+        doc.add(new Field("date", DateTools.dateToString(new Date(), DateTools.Resolution.DAY), Field.Store.YES, Field.Index.NO));
         writer.updateDocument(new Term("id", "1"), doc);
         writer.close();
         assertEquals(0, getHitCount("city", "Amsterdam"));
+
+        assertEquals(1, getHitCount("city", "Haag"));
     }
 
     public static void main(String[] args) throws Exception {
