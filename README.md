@@ -1,4 +1,4 @@
-# lucene-6.1.0
-lucene-6.1.0 DEMO
+# lucene-5.0.0
+lucene-5.0.0 DEMO
 
 ###test
