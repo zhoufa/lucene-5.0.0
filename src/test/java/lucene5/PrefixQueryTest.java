@@ -1,4 +1,4 @@
-package com.zhoufa.lucene.core;
+package lucene5;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.index.Term;

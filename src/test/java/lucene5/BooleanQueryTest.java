@@ -1,4 +1,4 @@
-package com.zhoufa.lucene.core;
+package lucene5;
 
 import com.zhoufa.lucene.util.TestUtil;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;

@@ -1,4 +1,4 @@
-package com.zhoufa.lucene.core;
+package lucene5;
 
 import junit.framework.TestCase;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;

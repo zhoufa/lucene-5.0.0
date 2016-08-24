@@ -1,4 +1,4 @@
-package lucene6;
+package lucene5;
 
 /**
  * @author zhou.fa@diligentfirst.com

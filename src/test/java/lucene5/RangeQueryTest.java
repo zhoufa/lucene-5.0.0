@@ -1,4 +1,4 @@
-package com.zhoufa.lucene.core;
+package lucene5;
 
 import com.zhoufa.lucene.customer.CustomQueryParser;
 import org.apache.lucene.analysis.core.SimpleAnalyzer;
