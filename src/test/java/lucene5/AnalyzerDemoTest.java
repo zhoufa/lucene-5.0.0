@@ -11,7 +11,8 @@ import java.io.IOException;
  */
 public class AnalyzerDemoTest extends TestCase {
 
-    private String msg = "I love you, China!B2C";
+//    private String msg = "The quick brown fox jumped over the lazy dogs";
+    private String msg = "XY&Z Corporation - xyz@example.com";
 
     private AnalyzerDemo demo;
 
