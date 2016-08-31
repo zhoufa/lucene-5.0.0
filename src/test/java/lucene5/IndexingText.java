@@ -32,6 +32,7 @@ public class IndexingText extends TestCase{
     protected void setUp() throws Exception{
         directory = new RAMDirectory();
         IndexWriter writer = getWriter();
+        writer.commit();
         for (int i=0; i<ids.length; i++) {
             Document doc = new Document();
             FieldType fieldType = new FieldType();//默认的是不存储，不建索引

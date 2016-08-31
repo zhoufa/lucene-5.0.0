@@ -2,6 +2,7 @@ package lucene5;
 
 import com.zhoufa.lucene.analyzer.AnalyzerDemo;
 import junit.framework.TestCase;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 public class AnalyzerDemoTest extends TestCase {
 
 //    private String msg = "The quick brown fox jumped over the lazy dogs";
-    private String msg = "XY&Z Corporation - xyz@example.com";
+    private String msg = "XY&Z Corporation to - xyz@example.com";
 
     private AnalyzerDemo demo;
 
@@ -35,5 +36,15 @@ public class AnalyzerDemoTest extends TestCase {
 
     public void testStoppaceAnalyzer() throws IOException {
         demo.stopAnalyzer(msg);
+    }
+
+    public void testStopAnalyzer() throws IOException {
+        demo.stopAnalyzer2(msg);
+    }
+
+    public void testMetaphoneAnalyzer() throws IOException {
+        demo.metaphone("The quick brown fox jumped over the lazy dogs");
+        System.out.println();
+        demo.metaphone("Tha quik brown phox jumpd ovvar tha lazi dogz");
     }
 }
