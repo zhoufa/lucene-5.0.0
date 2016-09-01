@@ -1,8 +1,11 @@
 package lucene5;
 
 import com.zhoufa.lucene.analyzer.AnalyzerDemo;
+import com.zhoufa.lucene.analyzer.synonym.BaseSynonymEngine;
+import com.zhoufa.lucene.analyzer.synonym.SynonymAnalyzer;
 import junit.framework.TestCase;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.util.AttributeSource;
 
 import java.io.IOException;
 
@@ -46,5 +49,11 @@ public class AnalyzerDemoTest extends TestCase {
         demo.metaphone("The quick brown fox jumped over the lazy dogs");
         System.out.println();
         demo.metaphone("Tha quik brown phox jumpd ovvar tha lazi dogz");
+    }
+
+    public void testSynonymAnalyzer() throws IOException {
+//        demo.synonym("The quick brown fox jumped over the lazy dogs");
+        AnalyzerDemo.assertTokensEqual(new SynonymAnalyzer(new BaseSynonymEngine()), "jumps", new String[] {"leaps", "hops"});
+
     }
 }
