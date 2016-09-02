@@ -14,6 +14,7 @@ import java.io.IOException;
  * @author zhou.fa@diligentfirst.com
  * @create 2016-09-02-11
  */
+@Deprecated
 public class PositionPorterStopAnalyzer extends Analyzer {
 
     private CharArraySet stopWords;
