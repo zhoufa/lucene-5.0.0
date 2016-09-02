@@ -107,6 +107,7 @@ public class AnalyzerDemo {
         tokenStream.reset();
         for (String s : strings) {
             Assert.assertTrue(tokenStream.incrementToken());
+            System.out.println(attribute.toString());
             Assert.assertEquals(s, attribute.toString());
         }
         Assert.assertFalse(tokenStream.incrementToken());

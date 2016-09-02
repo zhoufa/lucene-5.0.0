@@ -17,14 +17,15 @@ public class StopAnalyzer2 extends Analyzer{
     private CharArraySet stopWords;
 
     public StopAnalyzer2() {
-        stopWords = StopFilter.makeStopSet("xyz");
+        stopWords = StopFilter.makeStopSet("fox");
     }
 
     @Override
     protected TokenStreamComponents createComponents(String fieldName) {
 
         final Tokenizer source = new LetterTokenizer();
-        return new TokenStreamComponents(source, new LengthFilter(new LowerCaseFilter(new StopFilter(source,stopWords)), 3, Integer.MAX_VALUE));
+        return new TokenStreamComponents(source, new StopFilter(new LengthFilter(new LowerCaseFilter(source), 3, Integer.MAX_VALUE), stopWords));
+//        return new TokenStreamComponents(source, new LengthFilter(new LowerCaseFilter(new StopFilter(source,stopWords)), 3, Integer.MAX_VALUE));
     }
 
     public StopAnalyzer2(String stopWords) {

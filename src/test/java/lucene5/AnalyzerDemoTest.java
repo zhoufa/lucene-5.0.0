@@ -15,8 +15,8 @@ import java.io.IOException;
  */
 public class AnalyzerDemoTest extends TestCase {
 
-//    private String msg = "The quick brown fox jumped over the lazy dogs";
-    private String msg = "XY&Z Corporation to - xyz@example.com";
+    private String msg = "The quick brown fox jumps over the lazy dogs";
+//    private String msg = "XY&Z Corporation to - xyz@example.com";
 
     private AnalyzerDemo demo;
 
@@ -52,8 +52,8 @@ public class AnalyzerDemoTest extends TestCase {
     }
 
     public void testSynonymAnalyzer() throws IOException {
-//        demo.synonym("The quick brown fox jumped over the lazy dogs");
-        AnalyzerDemo.assertTokensEqual(new SynonymAnalyzer(new BaseSynonymEngine()), "jumps", new String[] {"leaps", "hops"});
+        demo.synonym("The quick brown fox jumps over the lazy dogs");
+        AnalyzerDemo.assertTokensEqual(new SynonymAnalyzer(new BaseSynonymEngine()), "jumps", new String[] {"jumps", "hops", "leaps"});
 
     }
 }
