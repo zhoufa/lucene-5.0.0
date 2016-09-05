@@ -54,6 +54,10 @@ public class AnalyzerDemoTest extends TestCase {
     public void testSynonymAnalyzer() throws IOException {
         demo.synonym("The quick brown fox jumps over the lazy dogs");
         AnalyzerDemo.assertTokensEqual(new SynonymAnalyzer(new BaseSynonymEngine()), "jumps", new String[] {"jumps", "hops", "leaps"});
+    }
 
+    public void testIkAnalyzer() throws IOException {
+
+        demo.ik("中国G20峰会在杭州举行");
     }
 }

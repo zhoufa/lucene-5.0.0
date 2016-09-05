@@ -14,6 +14,7 @@ import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.util.AttributeSource;
 import org.junit.Assert;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -61,6 +62,11 @@ public class AnalyzerDemo {
         SynonymAnalyzer analyzer = new SynonymAnalyzer(new BaseSynonymEngine());
         getTokens(analyzer, msg);
 
+    }
+
+    public void ik(String msg) throws IOException {
+        IKAnalyzer analyzer = new IKAnalyzer();
+        getTokens(analyzer, msg);
     }
 
     private void getTokens(Analyzer analyzer, String msg) throws IOException {
