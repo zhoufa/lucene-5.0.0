@@ -7,9 +7,8 @@ import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.analysis.core.StopFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 
-import java.io.IOException;
-
 /**
+ * 同义词分词
  * @author zhou.fa@diligentfirst.com
  * @create 2016-08-31-17
  */
