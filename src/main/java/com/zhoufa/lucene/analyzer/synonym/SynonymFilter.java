@@ -14,10 +14,10 @@ import java.util.Stack;
  * @author zhou.fa@diligentfirst.com
  * @creator 2016-08-31-17
  */
-public class SynonymFilter extends TokenFilter {
+class SynonymFilter extends TokenFilter {
     private static final String TOKEN_TYPE_SYNONYM = "SYNONYM";
 
-    private int skippedPositions;
+//    private int skippedPositions;
 
     private SynonymEngine synonymEngine;
 
@@ -34,7 +34,8 @@ public class SynonymFilter extends TokenFilter {
     /**
      * Construct a token stream filtering the given input.
      *
-     * @param input
+     * @param input tokenStream
+     * @param synonymEngine 同义词
      */
     SynonymFilter(TokenStream input, SynonymEngine synonymEngine) {
         super(input);
